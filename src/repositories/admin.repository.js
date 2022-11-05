@@ -7,4 +7,11 @@ async function getUser({username, password}) {
     `, [username, password])).rows[0]
 }
 
-export {getUser}
+function insertSession({id, token}) {
+    return connection.query(`
+        INSERT INTO session (admin_id, token)
+        VALUES ($1, $2)
+    `,[id, token])
+}
+
+export {getUser, insertSession}

@@ -5,8 +5,6 @@ import { adminSchema } from "../schemas/admin.schema.js"
 async function validateSignin(req, res, next) {
 
     const {username, password} = req.body
-    console.log(username, password)
-
     const {error} = adminSchema.validate({username, password})
 
     if (error) {
@@ -19,13 +17,13 @@ async function validateSignin(req, res, next) {
         if (!user) {
             return res.sendStatus(401)
         }
-        res.send("usuario conectado")
+        res.locals.user = user
+        next()
 
     } catch (error) {
         console.error(error)
         res.sendStatus(500)
     }
 }
-
 
 export {validateSignin}
