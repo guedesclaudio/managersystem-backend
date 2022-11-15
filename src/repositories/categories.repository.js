@@ -16,7 +16,13 @@ async function queryCategory({categoryFormated}) {
 
 async function queryCategories() {
     return (await connection.query(`
-        SELECT * FROM categories;
+    SELECT 
+        COUNT (products.id) AS number_products,
+        categories.name,
+        categories.id
+    FROM products
+    RIGHT JOIN categories ON categories.id = products.category_id
+    GROUP BY categories.name, categories.id;
     `)).rows
 }
 
