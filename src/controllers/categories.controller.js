@@ -16,4 +16,16 @@ async function createCategory(req, res) {
     }
 }
 
-export {createCategory}
+async function listCategories(res, res) {
+
+    try {
+        const categories = await queryCategories()
+        res.send(categories)
+        
+    } catch (error) {
+        console.error(error)
+        res.sendStatus(statusCode.SERVER_ERROR)
+    }
+}
+
+export {createCategory, listCategories}
