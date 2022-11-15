@@ -1,10 +1,10 @@
 import connection from "../database/database.js"
 
-function insertProduct({name, description, price, category}) {
+function insertProduct({product, description, price, category}) {
     return connection.query(`
-        INSERT INTO products (name, description, price, category)
+        INSERT INTO products (name, description, price, category_id)
         VALUES ($1, $2, $3, $4)
-    `, [name, description, price, category])
+    `, [product, description, price, category])
 }
 
 async function getProducts() {

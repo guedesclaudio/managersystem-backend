@@ -1,11 +1,14 @@
 import { productSchema } from "../schemas/products.schema.js"
+import statusCode from "../enums/statusCode.enum.js"
 
 async function validateCreateProduct(req, res, next) {
 
     const {error} = productSchema.validate(req.body)
-
+    console.log(req.body)
     if (error) {
-        return res.sendStatus(400)
+        const errors = error.details.map(value => value.message)
+        console.log(errors)
+        return res.status(statusCode.UNPROCESSABLE).send(errors)
     }
 
     try {

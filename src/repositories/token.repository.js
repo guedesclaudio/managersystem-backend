@@ -1,4 +1,4 @@
-import connection from "../database/databas.js";
+import connection from "../database/database.js";
 
 async function queryToken(token) {
     return (await connection.query(`

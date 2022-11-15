@@ -3,10 +3,10 @@ import { getProducts } from "../repositories/products.repository.js"
 
 async function createProduct(req, res) {
 
-    const {name, description, price, category} = req.body
+    const {product, description, price, category} = req.body
 
     try {
-        await insertProduct({name, description, price, category})
+        await insertProduct({product, description, price, category})
         res.sendStatus(201)
         
     } catch (error) {

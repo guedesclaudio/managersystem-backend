@@ -2,7 +2,7 @@ import statusCode from "../enums/statusCode.enum.js"
 import { queryToken } from "../repositories/token.repository.js"
 
 async function validateToken(req, res, next) {
-
+    
     const {authorization} = req.headers
     const token = authorization?.replace("Bearer ", "")
 

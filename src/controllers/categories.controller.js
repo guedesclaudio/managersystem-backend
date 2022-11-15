@@ -1,5 +1,6 @@
 import { insertCategory } from "../repositories/categories.repository.js"
 import statusCode from "../enums/statusCode.enum.js"
+import { queryCategories } from "../repositories/categories.repository.js"
 
 async function createCategory(req, res) {
 
@@ -16,7 +17,7 @@ async function createCategory(req, res) {
     }
 }
 
-async function listCategories(res, res) {
+async function listCategories(req, res) {
 
     try {
         const categories = await queryCategories()
