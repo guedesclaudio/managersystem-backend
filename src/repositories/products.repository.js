@@ -16,8 +16,23 @@ async function getProducts() {
             products.description,
             categories.name AS category
         FROM products
-        JOIN categories ON products.category_id = categories.id;
+        JOIN categories ON products.category_id = categories.id 
     `)).rows
+}
+
+async function getFilterProducts({categoryId}) {
+    return (await connection.query(`
+        SELECT 
+            products.id,
+            products.name,
+            products.price,
+            products.description,
+            categories.name AS category,
+            categories.id AS category_id
+        FROM products
+        JOIN categories ON products.category_id = categories.id
+        WHERE category_id = $1
+    `, [categoryId])).rows
 }
 
 async function queryProduct({productFormated}) {
@@ -38,5 +53,6 @@ export {
     insertProduct, 
     getProducts, 
     queryProduct,
-    deleteProduct
+    deleteProduct,
+    getFilterProducts
 }

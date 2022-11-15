@@ -1,6 +1,6 @@
 import { insertCategory } from "../repositories/categories.repository.js"
 import statusCode from "../enums/statusCode.enum.js"
-import { queryCategories } from "../repositories/categories.repository.js"
+import { queryCategories, deleteCategory } from "../repositories/categories.repository.js"
 
 async function createCategory(req, res) {
 
@@ -29,4 +29,17 @@ async function listCategories(req, res) {
     }
 }
 
-export {createCategory, listCategories}
+async function removeCategory(req, res) {
+
+    const {id} = req.params
+    
+    try {
+        await deleteCategory(id)
+        res.sendStatus(statusCode.NOT_CONTENT)
+    } catch (error) {
+        console.error(error)
+        res.sendStatus(statusCode.SERVER_ERROR)
+    }
+}
+
+export {createCategory, listCategories, deleteCategory, removeCategory}

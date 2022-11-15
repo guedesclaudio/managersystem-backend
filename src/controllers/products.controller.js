@@ -1,5 +1,5 @@
 import statusCode from "../enums/statusCode.enum.js"
-import { deleteProduct, insertProduct } from "../repositories/products.repository.js"
+import { deleteProduct, getFilterProducts, insertProduct } from "../repositories/products.repository.js"
 import { getProducts } from "../repositories/products.repository.js"
 
 async function createProduct(req, res) {
@@ -20,9 +20,16 @@ async function createProduct(req, res) {
 
 async function listProducts(req, res) {
 
-    try {
-        const products = await getProducts()
+    const {filter} = req.query
+    let products = []
 
+    try {
+        if (filter === "all") {
+            products = await getProducts()
+        } else {
+            products = await getFilterProducts({categoryId: filter})
+        }
+    
         products.forEach(value => {
             value.price = (Number(value.price) / 100).toFixed(2)
         })

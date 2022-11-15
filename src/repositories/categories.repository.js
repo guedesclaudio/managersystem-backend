@@ -26,4 +26,11 @@ async function queryCategories() {
     `)).rows
 }
 
-export {insertCategory, queryCategory, queryCategories}
+async function deleteCategory(id) {
+    return connection.query(`
+    DELETE FROM categories
+    WHERE id = $1
+    `, [id])
+}
+
+export {insertCategory, queryCategory, queryCategories, deleteCategory}
