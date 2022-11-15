@@ -7,6 +7,7 @@ import CategoriesRoute from "./src/routes/categories.route.js"
 import ProductsRoute from "./src/routes/products.route.js"
 
 const server = express()
+const PORT = process.env.PORT
 
 server
     .use(cors())
@@ -19,4 +20,4 @@ server.get("/status", (req, res) => {
     res.send("server it's on")
 })
 
-server.listen(4000, () => console.log(`Server listen on PORT 4000`))
+server.listen(PORT, () => console.log(`Server listen on PORT ${PORT}`))

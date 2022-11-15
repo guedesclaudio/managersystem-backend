@@ -1,4 +1,4 @@
-import connection from "../database/database"
+import connection from "../database/database.js"
 
 function insertProduct({name, description, price, category}) {
     return connection.query(`

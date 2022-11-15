@@ -1,13 +1,23 @@
+import statusCode from "../enums/statusCode.enum.js"
 import { queryCategory } from "../repositories/categories.repository.js"
+import { categorySchema } from "../schemas/categories.schema.js"
 
 async function validateCreateCategory(req, res, next) {
     
-    const {name} =  req.body
+    const {category} = req.body
+    const {error} = categorySchema.validate(req.body)
+
+    if (error) {
+        const errors = error.details.map(value => value.message)
+        return res.status(statusCode.UNPROCESSABLE).send(errors)
+    }
+
+    const categoryFormated = category.toLowerCase()
 
     try {
-        const category = queryCategory({name})
+        const categoryResult = await queryCategory({categoryFormated})
 
-        if (category) {
+        if (categoryResult) {
             return res.sendStatus(409)
         }
         next()

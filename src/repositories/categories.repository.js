@@ -1,17 +1,17 @@
-import connection from "../database/database"
+import connection from "../database/database.js"
 
-function insertCategory({name}) {
+function insertCategory({categoryFormated}) {
     return connection.query(`
         INSERT INTO categories (name)
         VALUES ($1)
-    `, [name])
+    `, [categoryFormated])
 }
 
-async function queryCategory({name}) {
+async function queryCategory({categoryFormated}) {
     return (await connection.query(`
         SELECT * FROM categories
         WHERE name = $1
-    `, [name])).rows[0]
+    `, [categoryFormated])).rows[0]
 }
 
 export {insertCategory, queryCategory}

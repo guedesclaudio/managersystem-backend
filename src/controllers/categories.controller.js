@@ -1,15 +1,18 @@
 import { insertCategory } from "../repositories/categories.repository.js"
+import statusCode from "../enums/statusCode.enum.js"
 
 async function createCategory(req, res) {
 
-    const {name} = req.body
+    const {category} = req.body
+    const categoryFormated = category.toLowerCase()
 
     try {
-        await insertCategory({name})
+        await insertCategory({categoryFormated})
+        res.status(statusCode.CREATED).send({message: "Ok!"})
         
     } catch (error) {
         console.error(error)
-        res.sendStatus(500)
+        res.sendStatus(statusCode.SERVER_ERROR)
     }
 }
 
