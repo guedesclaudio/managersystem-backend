@@ -1,10 +1,10 @@
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
-dotenv.config()
 import AdminRoute from "./src/routes/admin.route.js"
 import CategoriesRoute from "./src/routes/categories.route.js"
 import ProductsRoute from "./src/routes/products.route.js"
+dotenv.config()
 
 const server = express()
 const PORT = process.env.PORT

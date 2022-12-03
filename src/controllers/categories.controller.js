@@ -42,4 +42,4 @@ async function removeCategory(req, res) {
     }
 }
 
-export {createCategory, listCategories, deleteCategory, removeCategory}
+export {createCategory, listCategories, removeCategory}
