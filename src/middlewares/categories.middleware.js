@@ -1,31 +1,31 @@
-import statusCode from "../enums/statusCode.enum.js"
-import { queryCategory } from "../repositories/categories.repository.js"
-import { categorySchema } from "../schemas/categories.schema.js"
+import statusCode from "../enums/statusCode.enum.js";
+import categoriesRepository from "../repositories/categories.repository.js";
+import { categorySchema } from "../schemas/categories.schema.js";
 
 async function validateCreateCategory(req, res, next) {
     
-    const {category} = req.body
-    const {error} = categorySchema.validate(req.body)
+    const {category} = req.body;
+    const {error} = categorySchema.validate(req.body);
 
     if (error) {
-        const errors = error.details.map(value => value.message)
-        return res.status(statusCode.UNPROCESSABLE).send(errors)
+        const errors = error.details.map(value => value.message);
+        return res.status(statusCode.UNPROCESSABLE).send(errors);
     }
 
-    const categoryFormated = category.toLowerCase()
+    const categoryFormated = category.toLowerCase();
 
     try {
-        const categoryResult = await queryCategory({categoryFormated})
+        const categoryResult = await categoriesRepository.queryCategory({categoryFormated});
 
         if (categoryResult) {
-            return res.sendStatus(409)
+            return res.sendStatus(statusCode.CONFLICT);
         }
-        next()
+        next();
         
     } catch (error) {
         console.error(error)
-        res.sendStatus(500)
+        return res.sendStatus(statusCode.SERVER_ERROR);
     }
 }
 
-export {validateCreateCategory}
+export {validateCreateCategory};

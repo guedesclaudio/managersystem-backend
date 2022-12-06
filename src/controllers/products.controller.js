@@ -1,44 +1,31 @@
 import statusCode from "../enums/statusCode.enum.js"
-import { deleteProduct, getFilterProducts, insertProduct } from "../repositories/products.repository.js"
-import { getProducts } from "../repositories/products.repository.js"
+import productsService from "../services/products.service.js";
 
 async function createProduct(req, res) {
 
-    const {product, description, price, category} = req.body
-    const productFormated = product.toLowerCase()
-    const priceFormated = Number(price).toFixed(2) * 100
+    const productData = req.body;
 
     try {
-        await insertProduct({productFormated, description, priceFormated, category})
-        res.sendStatus(statusCode.CREATED)
+        await productsService.createNewProduct(productData);
+        return res.sendStatus(statusCode.CREATED);
         
     } catch (error) {
         console.error(error)
-        res.sendStatus(statusCode.SERVER_ERROR)
+        return res.sendStatus(statusCode.SERVER_ERROR)
     }
 }
 
 async function listProducts(req, res) {
 
-    const {filter} = req.query
-    let products = []
+    const {filter} = req.query;
 
     try {
-        if (filter === "all") {
-            products = await getProducts()
-        } else {
-            products = await getFilterProducts({categoryId: filter})
-        }
-    
-        products.forEach(value => {
-            value.price = (Number(value.price) / 100).toFixed(2)
-        })
-
+        const products = await productsService.readProducts(filter);
         //TODO - filtrar produtos por nome
-        res.send(products)
+        return res.status(statusCode.OK).send(products);
     } catch (error) {
         console.error(error)
-        res.sendStatus(statusCode.SERVER_ERROR)
+        return res.sendStatus(statusCode.SERVER_ERROR)
     }
 }
 
@@ -47,11 +34,11 @@ async function removeProduct(req, res) {
     const {id} = req.params
     
     try {
-        await deleteProduct(id)
-        res.sendStatus(statusCode.NOT_CONTENT)
+        await productsService.excludeProduct(id);
+        return res.sendStatus(statusCode.NOT_CONTENT)
     } catch (error) {
         console.error(error)
-        res.sendStatus(statusCode.SERVER_ERROR)
+        return res.sendStatus(statusCode.SERVER_ERROR)
     }
 }
 

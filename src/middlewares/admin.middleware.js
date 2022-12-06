@@ -1,29 +1,30 @@
-import { getUser } from "../repositories/admin.repository.js"
-import { adminSchema } from "../schemas/admin.schema.js"
+import statusCode from "../enums/statusCode.enum.js";
+import adminRepository from "../repositories/admin.repository.js";
+import { adminSchema } from "../schemas/admin.schema.js";
 
 
 async function validateSignin(req, res, next) {
 
-    const {username, password} = req.body
-    const {error} = adminSchema.validate({username, password})
+    const {username, password} = req.body;
+    const {error} = adminSchema.validate({username, password});
 
     if (error) {
-        return res.sendStatus(400)
+        return res.sendStatus(statusCode.BAD_REQUEST);
     }
 
     try {
-        const user = await getUser({username, password})
+        const user = await adminRepository.getUser({username, password});
 
         if (!user) {
-            return res.sendStatus(401)
+            return res.sendStatus(401);
         }
-        res.locals.user = user
-        next()
+        res.locals.user = user;
+        next();
 
     } catch (error) {
-        console.error(error)
-        res.sendStatus(500)
-    }
+        console.error(error);
+        return res.sendStatus(statusCode.SERVER_ERROR);
+    };
 }
 
-export {validateSignin}
+export {validateSignin};

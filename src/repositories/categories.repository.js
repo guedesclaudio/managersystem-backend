@@ -1,17 +1,17 @@
-import connection from "../database/database.js"
+import connection from "../database/database.js";
 
-function insertCategory({categoryFormated}) {
+function insertCategory(categoryName) {
     return connection.query(`
         INSERT INTO categories (name)
         VALUES ($1);
-    `, [categoryFormated])
+    `, [categoryName]);
 }
 
 async function queryCategory({categoryFormated}) {
     return (await connection.query(`
         SELECT * FROM categories
         WHERE name = $1;
-    `, [categoryFormated])).rows[0]
+    `, [categoryFormated])).rows[0];
 }
 
 async function queryCategories() {
@@ -23,14 +23,21 @@ async function queryCategories() {
     FROM products
     RIGHT JOIN categories ON categories.id = products.category_id
     GROUP BY categories.name, categories.id;
-    `)).rows
+    `)).rows;
 }
 
-async function deleteCategory(id) {
+async function deleteCategory(categoryId) {
     return connection.query(`
     DELETE FROM categories
     WHERE id = $1
-    `, [id])
+    `, [categoryId]);
 }
 
-export {insertCategory, queryCategory, queryCategories, deleteCategory}
+const categoriesRepository = {
+    insertCategory,
+    queryCategories,
+    queryCategory,
+    deleteCategory
+};
+
+export default categoriesRepository;

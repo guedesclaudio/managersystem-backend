@@ -1,20 +1,18 @@
-import { insertSession } from "../repositories/admin.repository.js"
-import {v4 as uuid} from "uuid"
+import adminService from "../services/admin.service";
+import statusCode from "../enums/statusCode.enum";
 
 async function createSession(req, res) {
 
-    const token = uuid()
-    const {id, username} = res.locals.user
+    const {id, username} = res.locals.user;
 
     try {
-        await insertSession({id, token})
-        res.status(200).send({username, token})
-        
+        const token = await adminService.sessionAdmin(id);
+        return res.status(200).send({username, token});
         
     } catch (error) {
-        console.error(error)
-        res.sendStatus(500)
+        console.error(error);
+        return res.sendStatus(statusCode.SERVER_ERROR);
     }
 }
 
-export {createSession}
+export {createSession};
