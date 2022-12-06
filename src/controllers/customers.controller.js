@@ -1,5 +1,4 @@
 import statusCode from "../enums/statusCode.enum.js";
-import customersRepository from "../repositories/customers.repository.js";
 import customersService from "../services/customers.service.js"
 
 async function createCustomer(req, res) {

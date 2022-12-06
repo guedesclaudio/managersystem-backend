@@ -1,4 +1,4 @@
-import categoriesRepository from "../repositories/categories.repository";
+import categoriesRepository from "../repositories/categories.repository.js";
 
 function createNewCategory(categoryName) {
     const categoryFormated = categoryName.toLowerCase()

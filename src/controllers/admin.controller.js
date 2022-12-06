@@ -1,5 +1,5 @@
-import adminService from "../services/admin.service";
-import statusCode from "../enums/statusCode.enum";
+import adminService from "../services/admin.service.js";
+import statusCode from "../enums/statusCode.enum.js";
 
 async function createSession(req, res) {
 

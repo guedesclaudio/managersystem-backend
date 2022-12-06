@@ -11,7 +11,7 @@ async function validateToken(req, res, next) {
     }
 
     try {
-        const session = await queryToken
+        const session = await queryToken();
 
         if (!session) {
             return res.sendStatus(statusCode.UNAUTHORIZED)

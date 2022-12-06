@@ -1,4 +1,4 @@
-import productsRepository from "../repositories/products.repository";
+import productsRepository from "../repositories/products.repository.js";
 
 function createNewProduct(productData) {
     const {product, description, price, category} = productData;

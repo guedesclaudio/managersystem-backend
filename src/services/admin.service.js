@@ -1,4 +1,4 @@
-import adminRepository from "../repositories/admin.repository";
+import adminRepository from "../repositories/admin.repository.js";
 import {v4 as uuid} from "uuid";
 
 async function sessionAdmin(id) {

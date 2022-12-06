@@ -1,6 +1,4 @@
-import { insertCategory } from "../repositories/categories.repository.js";
 import statusCode from "../enums/statusCode.enum.js";
-import { queryCategories, deleteCategory } from "../repositories/categories.repository.js";
 import categoriesService from "../services/categories.service.js";
 
 async function createCategory(req, res) {

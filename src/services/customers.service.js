@@ -1,4 +1,4 @@
-import customersRepository from "../repositories/customers.repository";
+import customersRepository from "../repositories/customers.repository.js";
 
 async function postCustomer(customerData) {
     customerData.name = customerData.name.toLowerCase;
