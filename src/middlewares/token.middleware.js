@@ -11,14 +11,15 @@ async function validateToken(req, res, next) {
     }
 
     try {
-        const session = await queryToken();
-
+        const session = await queryToken(token);
+    
         if (!session) {
             return res.sendStatus(statusCode.UNAUTHORIZED)
         }
         res.locals.userId = session.userId
         next()
     } catch (error) {
+        console.error(error)
         res.sendStatus(statusCode.SERVER_ERROR)
     }
 }

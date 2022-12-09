@@ -2,7 +2,6 @@ import statusCode from "../enums/statusCode.enum.js";
 import categoriesService from "../services/categories.service.js";
 
 async function createCategory(req, res) {
-
     const {category} = req.body;
 
     try {
@@ -16,7 +15,6 @@ async function createCategory(req, res) {
 }
 
 async function listCategories(req, res) {
-
     try {
         const categories = await categoriesService.getCategories();
         return res.send(categories);
@@ -28,7 +26,6 @@ async function listCategories(req, res) {
 }
 
 async function removeCategory(req, res) {
-
     const {id} = req.params
     
     try {

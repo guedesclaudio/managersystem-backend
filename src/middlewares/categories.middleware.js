@@ -3,7 +3,6 @@ import categoriesRepository from "../repositories/categories.repository.js";
 import { categorySchema } from "../schemas/categories.schema.js";
 
 async function validateCreateCategory(req, res, next) {
-    
     const {category} = req.body;
     const {error} = categorySchema.validate(req.body);
 

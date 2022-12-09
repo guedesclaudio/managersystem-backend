@@ -1,13 +1,14 @@
-import express from "express"
-import cors from "cors"
-import dotenv from "dotenv"
-import AdminRoute from "./src/routes/admin.route.js"
-import CategoriesRoute from "./src/routes/categories.route.js"
-import ProductsRoute from "./src/routes/products.route.js"
-dotenv.config()
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import AdminRoute from "./src/routes/admin.route.js";
+import CategoriesRoute from "./src/routes/categories.route.js";
+import ProductsRoute from "./src/routes/products.route.js";
+import CustomersRoute from "./src/routes/customers.route.js";
+dotenv.config();
 
-const server = express()
-const PORT = process.env.PORT
+const server = express();
+const PORT = process.env.PORT;
 
 server
     .use(cors())
@@ -15,9 +16,11 @@ server
     .use(AdminRoute)
     .use(CategoriesRoute)
     .use(ProductsRoute)
+    .use(CustomersRoute);
 
-server.get("/status", (req, res) => {
-    res.send("server it's on")
+server.get("/status", async (req, res) => {
+
+    res.send("server it's on");
 })
 
-server.listen(PORT, () => console.log(`Server listen on PORT ${PORT}`))
+server.listen(PORT, () => console.log(`Server listen on PORT ${PORT}`));

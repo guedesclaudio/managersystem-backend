@@ -4,9 +4,10 @@ import customersService from "../services/customers.service.js"
 async function createCustomer(req, res) {
 
     const customerData = req.body;
+    const { hasCity, hasDistrict } = req.locals.hasCity;
     
     try {
-        await customersService.postCustomer(customerData);
+        await customersService.postCustomer({customerData, hasCity, hasDistrict});
         return res.sendStatus(statusCode.CREATED);
         
     } catch (error) {
