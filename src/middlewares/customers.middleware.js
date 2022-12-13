@@ -4,6 +4,7 @@ import customersRepository from "../repositories/customers.repository.js";
 async function checkAddress(req, res, next) {
     
     const { cityName, districtName } = req.body;
+    console.log(cityName, districtName)
     const cityNameFormated = cityName.toLowerCase();
     const districtNameFormated = districtName.toLowerCase();
 
@@ -20,8 +21,9 @@ async function checkAddress(req, res, next) {
         if (district) {
             hasDistrict = district.id;
         }
+        console.log(hasCity, hasDistrict)
 
-        req.locals.Address = {hasCity, hasDistrict};
+        res.locals.address = {hasCity, hasDistrict};
         next();
         
     } catch (error) {

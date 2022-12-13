@@ -2,11 +2,12 @@ import customersRepository from "../repositories/customers.repository.js";
 
 async function postCustomer({customerData, hasCity, hasDistrict}) {
     //validar se já existe um usuario com o mesmo email por exemplo
-    customerData.name = customerData.name.toLowerCase;
-    customerData.cityName = customerData.cityName.toLowerCase;
+    customerData.name = customerData.name.toLowerCase();
+    customerData.cityName = customerData.cityName.toLowerCase();
 
     const { cityName, districtName, stateId } = customerData;
-    const customerId =  (await customersRepository.insertCustomer(customerData)).id;
+    const customerId = (await customersRepository.insertCustomer(customerData)).rows[0].id;
+    console.log(customerId)
     let cityId = hasCity;
     let districtId = hasDistrict;
 

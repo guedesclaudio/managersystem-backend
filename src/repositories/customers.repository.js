@@ -6,9 +6,9 @@ async function insertCustomer(customerData) {
     await connection.query(`
         INSERT INTO customers (
             name, email, cpf,
-            birthday, phone, addressId
+            birthday, phone
         ) VALUES (
-            $1, $2, $3, $4, $5, $6
+            $1, $2, $3, $4, $5
         );
     `, [
         name,
@@ -20,7 +20,7 @@ async function insertCustomer(customerData) {
 
     return connection.query(`
         SELECT * FROM customers WHERE email = $1;
-    `, [cpf]);
+    `, [email]);
 }
 
 async function insertCity(cityName, stateId) {
@@ -47,24 +47,26 @@ async function insertDistrict(districtName, cityId) {
 
 async function insertAddressCustomer({customerData, customerId, districtId}) {
 
-    const { CEP, streetName, streetNumber } = customerData;
-
+    const { cep, streetName, houseNumber, complement } = customerData;
+    
     return connection.query(`
         INSERT INTO addresses (
-            "clientId",
+            "customerId",
             "streetName",
-            "streetNumber",
+            "houseNumber",
             "districtId",
-            "CEP"
+            "CEP",
+            "complement"
         ) VALUES (
-            $1, $2, $3, $4, $5
+            $1, $2, $3, $4, $5, $6
         );
     `, [
         customerId,
         streetName,
-        streetNumber,
+        houseNumber,
         districtId,
-        CEP
+        cep,
+        complement
     ]);
 }
 
