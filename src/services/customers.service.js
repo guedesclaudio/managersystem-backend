@@ -7,7 +7,6 @@ async function postCustomer({customerData, hasCity, hasDistrict}) {
 
     const { cityName, districtName, stateId } = customerData;
     const customerId = (await customersRepository.insertCustomer(customerData)).rows[0].id;
-    console.log(customerId)
     let cityId = hasCity;
     let districtId = hasDistrict;
 
@@ -35,7 +34,7 @@ async function getCustomerByName(customerName) {
 }
 
 async function removeCustomer(customerId) {
-    return customersRepository.deleteCustomer();
+    return customersRepository.deleteCustomer(customerId);
 }
 
 

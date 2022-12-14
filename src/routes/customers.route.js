@@ -6,6 +6,6 @@ const router = express.Router()
 
 router.get("/customers", listCustomers)
 router.post("/customers", checkAddress, createCustomer)
-router.delete("/customers/:id", removeCustomer)
+router.delete("/customers/:customerId", removeCustomer)
 
 export default router

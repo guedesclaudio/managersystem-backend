@@ -83,9 +83,22 @@ async function findDistrictByName(districtName) {
 }
 
 async function findCustomers() {
-    return connection.query(`
-        SELECT * FROM customers;
-    `);
+    return (await connection.query(`
+        SELECT 
+            customers.*,
+            addresses."CEP",
+            addresses.complement,
+            addresses."houseNumber",
+            addresses."streetName",
+            districts.name AS "districtName",
+            cities.name AS "cityName",
+            states.name AS "stateName"
+        FROM customers
+        JOIN addresses ON customers.id = addresses."customerId"
+        JOIN districts ON addresses."districtId" = districts.id
+        JOIN cities ON districts."cityId" = cities.id
+        JOIN states ON cities."stateId" = states.id;
+    `)).rows;
 }
 
 async function findCustomer(customerName) {
@@ -96,7 +109,12 @@ async function findCustomer(customerName) {
 }
 
 async function deleteCustomer(customerId) {
-    return connection.query(`
+    await connection.query(`
+        DELETE FROM addresses
+        WHERE "customerId" = $1;
+    `, [customerId]);
+
+    await connection.query(`
         DELETE FROM customers
         WHERE id = $1;
     `, [customerId]);

@@ -4,7 +4,6 @@ import customersService from "../services/customers.service.js"
 async function createCustomer(req, res) {
 
     const customerData = req.body;
-    console.log(res.locals.address)
     const { hasCity, hasDistrict } = res.locals.address;
     
     try {
@@ -34,7 +33,7 @@ async function listCustomers(req, res) {
 async function removeCustomer(req, res) {
     
     const { customerId } = req.params;
-
+    
     if (customerId < 1 || !customerId || isNaN(Number(customerId))) {
         return res.sendStatus(statusCode.BAD_REQUEST);
     }

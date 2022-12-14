@@ -5,6 +5,7 @@ import AdminRoute from "./src/routes/admin.route.js";
 import CategoriesRoute from "./src/routes/categories.route.js";
 import ProductsRoute from "./src/routes/products.route.js";
 import CustomersRoute from "./src/routes/customers.route.js";
+import StatesRoute from "./src/routes/states.route.js"
 dotenv.config();
 
 const server = express();
@@ -16,7 +17,8 @@ server
     .use(AdminRoute)
     .use(CategoriesRoute)
     .use(ProductsRoute)
-    .use(CustomersRoute);
+    .use(CustomersRoute)
+    .use(StatesRoute);
 
 server.get("/status", async (req, res) => {
 
