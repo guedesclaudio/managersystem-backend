@@ -6,7 +6,7 @@ import { validateToken } from "../middlewares/token.middleware.js"
 
 const router = express.Router()
 
-router.get("/products", listProducts)
+router.get("/products", validateToken, listProducts)
 router.post("/products", validateToken, validateCreateProduct, createProduct)
 router.delete("/products/:id", validateToken, removeProduct)
 
