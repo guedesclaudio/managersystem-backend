@@ -25,6 +25,7 @@
 - Deploy com Vercel (back-end) e Render (banco de dados)
 <br>
 <br>
+
 # Tecnologias utilizadas
 - Node.js
 - EXPRESS
