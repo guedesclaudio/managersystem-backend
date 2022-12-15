@@ -1,19 +1,19 @@
 import { productSchema } from "../schemas/products.schema.js";
 import statusCode from "../enums/statusCode.enum.js";
 import productsRepository from "../repositories/products.repository.js"
+import categoriesRepository from "../repositories/categories.repository.js";
 
 async function validateCreateProduct(req, res, next) {
 
-    const {product} = req.body;
-    const {error} = productSchema.validate(req.body);
+    const { product, category } = req.body;
+    const { error } = productSchema.validate(req.body);
     
     if (error) {
         const errors = error.details.map(value => value.message);
-        console.log(errors);
         return res.status(statusCode.UNPROCESSABLE).send(errors);
     }
 
-    const productFormated = product.toLowerCase();
+    const productFormated = product?.toLowerCase();
 
     try {
         const product = await productsRepository.queryProduct({productFormated});
@@ -22,7 +22,13 @@ async function validateCreateProduct(req, res, next) {
             return res.sendStatus(statusCode.CONFLICT);
         }
 
-        //verificar se existe a categoria indicada
+        const categoryExist = await categoriesRepository.findCategoryById(category);
+
+        if (!categoryExist) {
+            console.log(categoryExist)
+            return res.sendStatus(statusCode.BAD_REQUEST);
+        }
+
         next();
         
     } catch (error) {

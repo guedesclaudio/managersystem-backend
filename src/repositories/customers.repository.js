@@ -120,6 +120,13 @@ async function deleteCustomer(customerId) {
     `, [customerId]);
 }
 
+async function findCustomerByEmailAndCpf(email, cpf) {
+    return (await connection.query(`
+        SELECT * FROM customers 
+        WHERE email = $1 OR cpf = $2;
+    `, [email, cpf])).rows[0];
+}
+
 const customersRepository = {
     findCustomers,
     findCustomer,
@@ -129,7 +136,8 @@ const customersRepository = {
     insertCity,
     insertDistrict,
     findCityByName,
-    findDistrictByName
+    findDistrictByName,
+    findCustomerByEmailAndCpf
 };
 
 export default customersRepository;

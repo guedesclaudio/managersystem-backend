@@ -3,8 +3,8 @@ import categoriesRepository from "../repositories/categories.repository.js";
 import { categorySchema } from "../schemas/categories.schema.js";
 
 async function validateCreateCategory(req, res, next) {
-    const {category} = req.body;
-    const {error} = categorySchema.validate(req.body);
+    const { category } = req.body;
+    const { error } = categorySchema.validate(req.body);
 
     if (error) {
         const errors = error.details.map(value => value.message);
@@ -14,9 +14,9 @@ async function validateCreateCategory(req, res, next) {
     const categoryFormated = category.toLowerCase();
 
     try {
-        const categoryResult = await categoriesRepository.queryCategory({categoryFormated});
+        const categoryAlreadyExist = await categoriesRepository.queryCategory({categoryFormated});
 
-        if (categoryResult) {
+        if (categoryAlreadyExist) {
             return res.sendStatus(statusCode.CONFLICT);
         }
         next();
