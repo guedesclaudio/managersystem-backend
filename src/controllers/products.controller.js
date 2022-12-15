@@ -10,8 +10,8 @@ async function createProduct(req, res) {
         return res.sendStatus(statusCode.CREATED);
         
     } catch (error) {
-        console.error(error)
-        return res.sendStatus(statusCode.SERVER_ERROR)
+        console.error(error);
+        return res.sendStatus(statusCode.SERVER_ERROR);
     }
 }
 
@@ -24,22 +24,22 @@ async function listProducts(req, res) {
         //TODO - filtrar produtos por nome
         return res.status(statusCode.OK).send(products);
     } catch (error) {
-        console.error(error)
-        return res.sendStatus(statusCode.SERVER_ERROR)
+        console.error(error);
+        return res.sendStatus(statusCode.SERVER_ERROR);
     }
 }
 
 async function removeProduct(req, res) {
 
-    const {id} = req.params
+    const { id } = req.params;
     
     try {
         await productsService.excludeProduct(id);
-        return res.sendStatus(statusCode.NOT_CONTENT)
+        return res.sendStatus(statusCode.NOT_CONTENT);
     } catch (error) {
-        console.error(error)
-        return res.sendStatus(statusCode.SERVER_ERROR)
+        console.error(error);
+        return res.sendStatus(statusCode.SERVER_ERROR);
     }
 }
 
-export {createProduct, listProducts, removeProduct}
+export { createProduct, listProducts, removeProduct };

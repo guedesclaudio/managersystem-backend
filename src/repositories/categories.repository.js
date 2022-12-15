@@ -14,6 +14,13 @@ async function queryCategory({categoryFormated}) {
     `, [categoryFormated])).rows[0];
 }
 
+async function findCategoryById(categoryId) {
+    return (await connection.query(`
+        SELECT * FROM categories
+        WHERE id = $1;
+    `, [categoryId])).rows[0];
+}
+
 async function queryCategories() {
     return (await connection.query(`
     SELECT 
@@ -37,7 +44,8 @@ const categoriesRepository = {
     insertCategory,
     queryCategories,
     queryCategory,
-    deleteCategory
+    deleteCategory,
+    findCategoryById
 };
 
 export default categoriesRepository;
